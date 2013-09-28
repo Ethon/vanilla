@@ -37,7 +37,7 @@ vanilla::object::ptr vanilla::none_object::type_name() const
     return allocate_object<string_object>("none");
 }
         
-vanilla::object::ptr vanilla::none_object::clone() const
+vanilla::object::ptr vanilla::none_object::copy(bool) const
 {
     return const_cast<none_object*>(this)->shared_from_this();
 }

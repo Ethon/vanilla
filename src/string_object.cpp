@@ -45,7 +45,7 @@ vanilla::object::ptr vanilla::string_object::type_name() const
     return allocate_object<string_object>("string");
 }
         
-vanilla::object::ptr vanilla::string_object::clone() const
+vanilla::object::ptr vanilla::string_object::copy(bool) const
 {
     return allocate_object<string_object>(_v);
 }

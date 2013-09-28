@@ -48,7 +48,7 @@ namespace vanilla
         virtual object_type_id type_id() const override;
         virtual ptr type_name() const override;
         
-        virtual ptr clone() const override;
+        virtual ptr copy(bool deep) const override;
         
         virtual ptr to_string() const override;
         

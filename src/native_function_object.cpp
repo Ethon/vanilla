@@ -345,7 +345,7 @@ vanilla::object::ptr vanilla::native_function_object::type_name() const
     return allocate_object<string_object>("native function");
 }
         
-vanilla::object::ptr vanilla::native_function_object::clone() const
+vanilla::object::ptr vanilla::native_function_object::copy(bool) const
 {
     return allocate_object<native_function_object>(
         _name, _library, _result, _args, _abi);

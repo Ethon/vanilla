@@ -47,7 +47,7 @@ namespace vanilla
         
         virtual ptr type_name() const override;
         
-        virtual ptr clone() const override;
+        virtual ptr copy(bool deep) const override;
         
         virtual ptr to_string() const override;
         virtual ptr to_bool() const override;

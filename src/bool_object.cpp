@@ -45,7 +45,7 @@ vanilla::object::ptr vanilla::bool_object::type_name() const
     return allocate_object<string_object>("bool");
 }
         
-vanilla::object::ptr vanilla::bool_object::clone() const
+vanilla::object::ptr vanilla::bool_object::copy(bool) const
 {
     return allocate_object<bool_object>(_v);
 }

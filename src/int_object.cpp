@@ -45,7 +45,7 @@ namespace
         {   
             "int", [](vanilla::int_object* obj) -> vanilla::object::ptr
             {
-                return obj->clone();
+                return obj->copy(true);
             }
         },
         
@@ -166,7 +166,7 @@ vanilla::object::ptr vanilla::int_object::type_name() const
     return allocate_object<string_object>("int");
 }
         
-vanilla::object::ptr vanilla::int_object::clone() const
+vanilla::object::ptr vanilla::int_object::copy(bool) const
 {
     return allocate_object<int_object>(_v);
 }

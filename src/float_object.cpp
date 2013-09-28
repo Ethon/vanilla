@@ -120,7 +120,7 @@ vanilla::object::ptr vanilla::float_object::type_name() const
     return allocate_object<string_object>("float");
 }
         
-vanilla::object::ptr vanilla::float_object::clone() const
+vanilla::object::ptr vanilla::float_object::copy(bool) const
 {
     return allocate_object<float_object>(_v);
 }

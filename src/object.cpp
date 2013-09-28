@@ -33,7 +33,7 @@
 vanilla::object::~object()
 { }
 
-vanilla::object::ptr vanilla::object::clone() const
+vanilla::object::ptr vanilla::object::copy(bool) const
 {
     vanilla::object* this_ = const_cast<vanilla::object*>(this);
     BOOST_THROW_EXCEPTION(error::unsupported_operation_error()

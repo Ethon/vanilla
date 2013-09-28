@@ -46,7 +46,7 @@ namespace vanilla
         
         virtual ptr type_name() const = 0;
         
-        virtual ptr clone() const;
+        virtual ptr copy(bool deep = false) const;
         
         virtual ptr to_string() const;
         virtual ptr to_int() const;

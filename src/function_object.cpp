@@ -85,7 +85,7 @@ vanilla::object::ptr vanilla::function_object::type_name() const
     return allocate_object<string_object>("function");
 }
         
-vanilla::object::ptr vanilla::function_object::clone() const
+vanilla::object::ptr vanilla::function_object::copy(bool) const
 {
     return const_cast<function_object*>(this)->shared_from_this();
 }
