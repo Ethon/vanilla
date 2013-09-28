@@ -113,6 +113,9 @@ namespace vanilla
         struct unsupported_operation_error : invalid_operation_error
         { };
         
+        struct invalid_index_error : invalid_operation_error
+        { };
+        
         VANILLA_MAKE_ERRINFO(object::ptr, first_operand)
         VANILLA_MAKE_ERRINFO(object::ptr, second_operand)
         VANILLA_MAKE_ERRINFO(char const*, operation_name)
