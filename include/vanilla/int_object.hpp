@@ -98,6 +98,10 @@ namespace vanilla
         // Equality operations.
         virtual ptr eq(object::ptr const& other);
         virtual ptr neq(object::ptr const& other);
+        
+        // Element selection.
+        virtual ptr eget(std::string const& name);
+        virtual void eset(std::string const& name, ptr value);
     };
     
     namespace error

@@ -22,12 +22,58 @@
 // C++ Standard Library:
 #include <cstring>
 #include <climits>
+#include <unordered_map>
 
 // Vanilla:
 #include <vanilla/int_object.hpp>
 #include <vanilla/string_object.hpp>
 #include <vanilla/float_object.hpp>
 #include <vanilla/bool_object.hpp>
+
+///////////////////////////////////////////////////////////////////////////
+/////////// UTILITY
+///////////////////////////////////////////////////////////////////////////
+
+namespace
+{
+    std::unordered_map
+    <
+        std::string,
+        vanilla::object::ptr (*)(vanilla::int_object*)
+    > const int_object_attributes =
+    {
+        {   
+            "int", [](vanilla::int_object* obj) -> vanilla::object::ptr
+            {
+                return obj->clone();
+            }
+        },
+        
+        {
+            "float", [](vanilla::int_object* obj) -> vanilla::object::ptr
+            {
+                return vanilla::allocate_object<vanilla::float_object>(obj->value().mpz());
+            }
+        },
+        
+        {
+            "string", [](vanilla::int_object* obj) -> vanilla::object::ptr
+            {
+                return obj->to_string();
+            }
+        },
+        
+        {
+            "sqrt", [](vanilla::int_object* obj) -> vanilla::object::ptr
+            {
+                vanilla::float_object::float_type mpf(obj->value().mpz());
+                vanilla::float_object::float_type result;
+                mpf_sqrt(result.mpf(), mpf.mpf());
+                return  vanilla::allocate_object<vanilla::float_object>(std::move(result));
+            }
+        },
+    };
+}
 
 ///////////////////////////////////////////////////////////////////////////
 /////////// vanilla::int_object::gmp_mpz_wrapper
@@ -430,6 +476,20 @@ vanilla::object::ptr vanilla::int_object::neq(object::ptr const& other)
             return object::ge(other);
         }
     }
+}
+
+vanilla::object::ptr vanilla::int_object::eget(std::string const& name)
+{
+    auto iter = int_object_attributes.find(name);
+    if(iter == int_object_attributes.end())
+        return object::eget(name);
+    
+    return iter->second(this);
+}
+
+void vanilla::int_object::eset(std::string const& name, ptr value)
+{
+    return object::eset(name, std::move(value));
 }
 
 ///////////////////////////////////////////////////////////////////////////
