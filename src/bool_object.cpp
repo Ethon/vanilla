@@ -21,6 +21,7 @@
 
 // C++ Standard Library:
 #include <cassert>
+#include <exception>
 
 // Vanilla:
 #include <vanilla/bool_object.hpp>
@@ -59,6 +60,7 @@ vanilla::object::ptr vanilla::bool_object::to_string() const
         return allocate_object<string_object>("indeterminate");
     
     assert(false);
+    std::terminate();
 }
 
 vanilla::object::ptr vanilla::bool_object::to_bool() const

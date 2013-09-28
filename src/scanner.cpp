@@ -658,6 +658,7 @@ vanilla::token vanilla::scanner::get_token()
             << error::line_info(line()) << error::pos_info(pos()));
         
     assert(false);
+    std::terminate();
 }
 
 unsigned vanilla::scanner::line() const
