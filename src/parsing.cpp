@@ -408,6 +408,27 @@ namespace
             std::move(return_type), std::move(argtypes));
     }
     
+    vanilla::expression_node::ptr parse_array_expression(token_buffer& buffer)
+    {
+        vanilla::token* t;
+        if( !(t = buffer.accept(vanilla::ttype::lbrack)) )
+            return vanilla::expression_node::ptr();
+        
+        std::vector<vanilla::expression_node::ptr> values;
+        while(!buffer.accept(vanilla::ttype::rbrack))
+        {
+            values.push_back(parse_expression(buffer));
+            if(!buffer.accept(vanilla::ttype::comma))
+            {
+                buffer.expect(vanilla::ttype::rbrack);
+                break;
+            }
+        }
+        
+        return make_unique<vanilla::array_expression_node>(
+            t->line, t->pos, std::move(values));
+    }
+    
     vanilla::expression_node::ptr parse_primary_expression(token_buffer& buffer)
     {
         vanilla::expression_node::ptr n;
@@ -420,6 +441,8 @@ namespace
         if( (n = parse_function_definition_expression(buffer)) )
             return n;
         if( (n = parse_native_function_definition_expression(buffer)) )
+            return n;
+        if( (n = parse_array_expression(buffer)) )
             return n;
         
         vanilla::token* t = buffer.cur();

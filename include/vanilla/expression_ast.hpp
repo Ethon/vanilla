@@ -177,6 +177,24 @@ namespace vanilla
         virtual void accept(ast_visitor* v) override;
     };
     
+    class array_expression_node :
+        public expression_node
+    {
+    private:
+        std::vector<expression_node::ptr> _values;
+    public:
+        array_expression_node(  unsigned line,
+                                unsigned pos,
+                                std::vector<expression_node::ptr> values);
+        
+        virtual object::ptr eval(context&) override;
+        
+        virtual void accept(ast_visitor* v) override;
+        
+        std::vector<expression_node::ptr> const& values();
+    };
+
+    
     ///////////////////////////////////////////////////////////////////////////
     /////////// UNARY OPERATOR EXPRESSIONS 
     ///////////////////////////////////////////////////////////////////////////

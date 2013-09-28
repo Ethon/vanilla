@@ -26,6 +26,7 @@
 #include <vanilla/native_library_cache.hpp>
 #include <vanilla/function_object.hpp>
 #include <vanilla/bool_object.hpp>
+#include <vanilla/array_object.hpp>
 
 ///////////////////////////////////////////////////////////////////////////
 /////////// vanilla::expression_node
@@ -182,6 +183,38 @@ vanilla::bool_expression_node::bool_expression_node(
 void vanilla::bool_expression_node::accept(ast_visitor* v)
 {
     //v->visit(this);
+}
+
+///////////////////////////////////////////////////////////////////////////
+/////////// vanilla::array_expression_node
+///////////////////////////////////////////////////////////////////////////
+
+vanilla::array_expression_node::array_expression_node(
+            unsigned line,
+            unsigned pos,
+            std::vector<expression_node::ptr> values)
+    :   expression_node(line, pos),
+        _values(std::move(values))        
+{ }
+
+vanilla::object::ptr vanilla::array_expression_node::eval(context& c)
+{
+    array_object::array_type result;
+    result.reserve(_values.size());
+    for(auto& cur : _values)
+        result.push_back(cur->eval(c));
+    return allocate_object<array_object>(std::move(result));
+}       
+
+void vanilla::array_expression_node::accept(ast_visitor* v)
+{
+    //v->visit(this);
+}
+
+std::vector<vanilla::expression_node::ptr> const&
+vanilla::array_expression_node::values()
+{
+    return _values;
 }
 
 ///////////////////////////////////////////////////////////////////////////
