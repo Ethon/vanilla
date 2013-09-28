@@ -22,6 +22,7 @@ add_executable(vanilla
     src/float_object.cpp
     src/bool_object.cpp
     src/string_object.cpp
+    src/array_object.cpp
     src/function_object.cpp
     src/native_function_object.cpp
     
