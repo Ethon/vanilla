@@ -464,6 +464,17 @@ namespace
                 continue;
             }
             
+            // Element selection.
+            if(buffer.accept(vanilla::ttype::element_selection))
+            {
+                vanilla::token* t = buffer.expect(vanilla::ttype::ident);
+                std::string element_name = std::string(t->lexeme.begin(), t->lexeme.end());
+                
+                expr = make_unique<vanilla::element_selection_expression_node>(
+                    expr->get_line(), expr->get_pos(), std::move(expr), std::move(element_name));
+                continue;
+            }
+            
             break;
         }
         

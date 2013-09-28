@@ -492,6 +492,27 @@ namespace vanilla
         
         virtual void accept(ast_visitor* v) override;
     };
+    
+    class element_selection_expression_node : public expression_node
+    {
+    private:
+        expression_node::ptr _left;
+        std::string _element_name;
+        
+    public:
+        element_selection_expression_node(  unsigned line,
+                                            unsigned pos,
+                                            expression_node::ptr left,
+                                            std::string element_name );
+        
+        virtual object::ptr eval(context&) override;
+        
+        expression_node* get_left();
+        
+        std::string const& get_element_name();
+        
+        virtual void accept(ast_visitor* v) override;
+    };
 }
 
 #endif // HEADER_UUID_D46F169E01F944C2880A480F866B6746

@@ -191,3 +191,19 @@ void vanilla::object::sset(object::ptr const&, ptr)
         << error::first_operand(shared_from_this())
         << error::operation_name("subscript assign"));
 }
+
+vanilla::object::ptr vanilla::object::eget(std::string const& name)
+{
+    BOOST_THROW_EXCEPTION(error::unsupported_operation_error()
+        << error::first_operand(shared_from_this())
+        << error::cast_target_name(name)
+        << error::operation_name("element selection"));
+}
+
+void vanilla::object::eset(std::string const& name, ptr)
+{
+    BOOST_THROW_EXCEPTION(error::unsupported_operation_error()
+        << error::first_operand(shared_from_this())
+        << error::cast_target_name(name)
+        << error::operation_name("element assign"));
+}

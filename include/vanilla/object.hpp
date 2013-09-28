@@ -81,6 +81,10 @@ namespace vanilla
         // Subscript.
         virtual ptr sget(object::ptr const& subscript);
         virtual void sset(object::ptr const& subscript, ptr value);
+        
+        // Element selection.
+        virtual ptr eget(std::string const& name);
+        virtual void eset(std::string const& name, ptr value);
     };
     
     template<typename T, typename... Args>
@@ -113,6 +117,7 @@ namespace vanilla
         VANILLA_MAKE_ERRINFO(object::ptr, second_operand)
         VANILLA_MAKE_ERRINFO(char const*, operation_name)
         VANILLA_MAKE_ERRINFO(std::string, cast_target_name)
+        VANILLA_MAKE_ERRINFO(std::string, element_name)
     }
 }
 

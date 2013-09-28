@@ -842,3 +842,37 @@ void vanilla::subscript_expression_node::accept(ast_visitor* v)
 {
     //v->visit(this);
 }
+
+///////////////////////////////////////////////////////////////////////////
+/////////// vanilla::element_selection_expression_node
+///////////////////////////////////////////////////////////////////////////
+        
+vanilla::element_selection_expression_node::element_selection_expression_node(
+            unsigned line,
+            unsigned pos,
+            expression_node::ptr left,
+            std::string element_name)
+    :   expression_node(line, pos),
+        _left(std::move(left)),
+        _element_name(std::move(element_name))
+{ }
+        
+vanilla::object::ptr vanilla::element_selection_expression_node::eval(context& c)
+{
+    return _left->eval(c)->eget(_element_name);
+}
+        
+vanilla::expression_node* vanilla::element_selection_expression_node::get_left()
+{
+    return _left.get();
+}
+        
+std::string const& vanilla::element_selection_expression_node::get_element_name()
+{
+    return _element_name;
+}
+        
+void vanilla::element_selection_expression_node::accept(ast_visitor* v)
+{
+    //v->visit(this);
+}
