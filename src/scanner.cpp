@@ -258,7 +258,8 @@ int vanilla::scanner::read_number_lit(token& t)
         }
         
         // A real of the format 0.*****
-        else if(*_cur == '.')
+        // Or 0 followed by the element selection operator!
+        else if(*_cur == '.' && std::isdigit(_cur[1]))
         {
             char const* begin = _cur - 1;
             next();
@@ -293,9 +294,10 @@ int vanilla::scanner::read_number_lit(token& t)
         if(begin == end)
             return SCANNER_NOMATCH;
         
-        if(*_cur == '.')
+        // A real OR an int followed by the element selection operator!
+        if(*_cur == '.' && std::isdigit(_cur[1]))
         {
-            ++_cur;
+            next();
             while(std::isdigit(*_cur))
                 next();
             end = _cur;
