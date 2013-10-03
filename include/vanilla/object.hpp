@@ -34,6 +34,23 @@ namespace vanilla
     typedef std::uint32_t object_type_id;
     
     struct context;
+    
+    object_type_id const OBJECT_ID_NONE = 0x0;
+    object_type_id const OBJECT_ID_INT = 0x1;
+    object_type_id const OBJECT_ID_FLOAT = 0x2;
+    object_type_id const OBJECT_ID_BOOL = 0x3;
+    object_type_id const OBJECT_ID_STRING = 0x4;
+    object_type_id const OBJECT_ID_ARRAY = 0x5;
+    object_type_id const OBJECT_ID_TUPLE = 0x6;
+    object_type_id const OBJECT_ID_DICT = 0x7;
+    object_type_id const OBJECT_ID_HASH = 0x8;
+    object_type_id const OBJECT_ID_FUNCTION = 0x9;
+    object_type_id const OBJECT_ID_NATIVE_FUNCTION = 0xA;
+    object_type_id const OBJECT_ID_MEMBER_FUNCTION = 0xB;
+    object_type_id const OBJECT_ID_CLASS = 0xC;
+    
+    object_type_id const OBJECT_ID_CLASSFLAG = 1 << 31;
+    
  
     class object : public std::enable_shared_from_this<object>
     {

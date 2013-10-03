@@ -29,9 +29,7 @@
 #include <vanilla/object.hpp>
 
 namespace vanilla
-{
-    object_type_id const OBJECT_ID_STRING = 0x4;
-    
+{   
     class string_object : public object
     {
     public:

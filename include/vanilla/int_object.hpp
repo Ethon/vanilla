@@ -29,9 +29,7 @@
 #include <vanilla/object.hpp>
 
 namespace vanilla
-{
-    object_type_id const OBJECT_ID_INTEGER = 0x1;
-    
+{   
     class int_object : public object
     {
     public:

@@ -30,8 +30,6 @@
 
 namespace vanilla
 {
-    object_type_id const OBJECT_ID_ARRAY = 0x5;
-    
     class array_object : public object
     {
     public:

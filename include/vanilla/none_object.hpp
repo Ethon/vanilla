@@ -26,9 +26,7 @@
 #include <vanilla/object.hpp>
 
 namespace vanilla
-{
-    object_type_id const OBJECT_ID_NONE = 0x0;
-    
+{   
     class none_object : public object
     {
     public:

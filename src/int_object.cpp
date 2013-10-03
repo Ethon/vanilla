@@ -158,7 +158,7 @@ mpz_t& vanilla::int_object::gmp_mpz_wrapper::mpz() const
         
 vanilla::object_type_id vanilla::int_object::type_id() const
 {
-    return OBJECT_ID_INTEGER;
+    return OBJECT_ID_INT;
 }
 
 vanilla::object::ptr vanilla::int_object::type_name() const
@@ -213,7 +213,7 @@ vanilla::object::ptr vanilla::int_object::add(object::ptr const& other)
 {
     switch(other->type_id())
     {
-        case OBJECT_ID_INTEGER:
+        case OBJECT_ID_INT:
         {
             int_object const* rhs = static_cast<int_object const*>(other.get());
             int_type result;
@@ -241,7 +241,7 @@ vanilla::object::ptr vanilla::int_object::sub(object::ptr const& other)
 {
     switch(other->type_id())
     {
-        case OBJECT_ID_INTEGER:
+        case OBJECT_ID_INT:
         {
             int_object const* rhs = static_cast<int_object const*>(other.get());
             int_type result;
@@ -269,7 +269,7 @@ vanilla::object::ptr vanilla::int_object::mul(object::ptr const& other)
 {
     switch(other->type_id())
     {
-        case OBJECT_ID_INTEGER:
+        case OBJECT_ID_INT:
         {
             int_object const* rhs = static_cast<int_object const*>(other.get());
             int_type result;
@@ -297,7 +297,7 @@ vanilla::object::ptr vanilla::int_object::div(object::ptr const& other)
 {
     switch(other->type_id())
     {
-        case OBJECT_ID_INTEGER:
+        case OBJECT_ID_INT:
         {
             float_object::float_type lhs( (_v.mpz()) );
             float_object::float_type rhs( (static_cast<int_object const*>(other.get())->value().mpz()) );
@@ -326,7 +326,7 @@ vanilla::object::ptr vanilla::int_object::lt(object::ptr const& other)
 {
     switch(other->type_id())
     {
-        case OBJECT_ID_INTEGER:
+        case OBJECT_ID_INT:
         {
             int_object const* rhs = static_cast<int_object const*>(other.get());
             int result = mpz_cmp(_v.mpz(), rhs->value().mpz());
@@ -351,7 +351,7 @@ vanilla::object::ptr vanilla::int_object::le(object::ptr const& other)
 {
     switch(other->type_id())
     {
-        case OBJECT_ID_INTEGER:
+        case OBJECT_ID_INT:
         {
             int_object const* rhs = static_cast<int_object const*>(other.get());
             int result = mpz_cmp(_v.mpz(), rhs->value().mpz());
@@ -376,7 +376,7 @@ vanilla::object::ptr vanilla::int_object::gt(object::ptr const& other)
 {
     switch(other->type_id())
     {
-        case OBJECT_ID_INTEGER:
+        case OBJECT_ID_INT:
         {
             int_object const* rhs = static_cast<int_object const*>(other.get());
             int result = mpz_cmp(_v.mpz(), rhs->value().mpz());
@@ -401,7 +401,7 @@ vanilla::object::ptr vanilla::int_object::ge(object::ptr const& other)
 {
     switch(other->type_id())
     {
-        case OBJECT_ID_INTEGER:
+        case OBJECT_ID_INT:
         {
             int_object const* rhs = static_cast<int_object const*>(other.get());
             int result = mpz_cmp(_v.mpz(), rhs->value().mpz());
@@ -426,7 +426,7 @@ vanilla::object::ptr vanilla::int_object::eq(object::ptr const& other)
 {
     switch(other->type_id())
     {
-        case OBJECT_ID_INTEGER:
+        case OBJECT_ID_INT:
         {
             int_object const* rhs = static_cast<int_object const*>(other.get());
             int result = mpz_cmp(_v.mpz(), rhs->value().mpz());
@@ -454,7 +454,7 @@ vanilla::object::ptr vanilla::int_object::neq(object::ptr const& other)
 {
     switch(other->type_id())
     {
-        case OBJECT_ID_INTEGER:
+        case OBJECT_ID_INT:
         {
             int_object const* rhs = static_cast<int_object const*>(other.get());
             int result = mpz_cmp(_v.mpz(), rhs->value().mpz());
@@ -537,7 +537,7 @@ unsigned int vanilla::int_object_to_unsigned_int(object::ptr const& obj)
 
 unsigned long vanilla::int_object_to_unsigned_long(object::ptr const& obj)
 {
-    if(obj->type_id() != OBJECT_ID_INTEGER)
+    if(obj->type_id() != OBJECT_ID_INT)
     {
         BOOST_THROW_EXCEPTION(error::bad_cast_error()
             << error::first_operand(obj)
@@ -603,7 +603,7 @@ signed int vanilla::int_object_to_signed_int(object::ptr const& obj)
 
 signed long vanilla::int_object_to_signed_long(object::ptr const& obj)
 {
-    if(obj->type_id() != OBJECT_ID_INTEGER)
+    if(obj->type_id() != OBJECT_ID_INT)
     {
         BOOST_THROW_EXCEPTION(error::bad_cast_error()
             << error::first_operand(obj)
@@ -626,7 +626,7 @@ signed long long vanilla::int_object_to_signed_longlong(object::ptr const& obj)
     return int_object_to_signed_long(obj);
 #endif
     
-    if(obj->type_id() != OBJECT_ID_INTEGER)
+    if(obj->type_id() != OBJECT_ID_INT)
     {
         BOOST_THROW_EXCEPTION(error::bad_cast_error()
             << error::first_operand(obj)

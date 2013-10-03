@@ -80,8 +80,6 @@ namespace vanilla
         };
     }
     
-    object_type_id const OBJECT_ID_NATIVE_FUNCTION = 0x8;
-    
     class native_function_object : public object
     {
     private:

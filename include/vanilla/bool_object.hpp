@@ -30,8 +30,6 @@
 
 namespace vanilla
 {
-    object_type_id const OBJECT_ID_BOOL = 0x3;
-    
     class bool_object : public object
     {
     public:

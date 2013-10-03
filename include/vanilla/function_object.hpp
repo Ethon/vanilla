@@ -48,8 +48,6 @@ namespace vanilla
     
     class context;
     
-    object_type_id const OBJECT_ID_FUNCTION = 0x7;
-    
     class function_object : public object
     {
     public:

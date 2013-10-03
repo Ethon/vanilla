@@ -30,8 +30,6 @@
 
 namespace vanilla
 {
-    object_type_id const OBJECT_ID_FLOAT = 0x2;
-    
     class float_object : public object
     {
     public:
