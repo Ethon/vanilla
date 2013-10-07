@@ -1,9 +1,42 @@
+# Base project setup.
 project(vanilla)
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.6)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
-add_definitions("-std=c++11")
+# Switch to C++11 mode.
+if(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+    add_definitions("-std=c++11")
+endif()
 
-include_directories(./include)
+# Find required libraries.
+find_package(LibFFI REQUIRED)
+find_package(GMP REQUIRED)
+find_package(Boost REQUIRED)
+
+# Set OS specific libraries.
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set(OS_LIBS "dl")
+endif()
+
+# Set include directories.
+include_directories(
+    ./include
+    ${LIBFFI_INCLUDE_DIRS}
+    ${GMP_INCLUDE_DIRS}
+    ${Boost_INCLUDE_DIRS}
+)
+
+# Set libraries.
+set(LIBS
+    ${OS_LIBS}
+    ${LIBFFI_LIBRARIES}
+    ${GMP_LIBRARIES}
+    ${Boost_LIBRARIES}
+)
+
+# Set definitions.
+add_definitions("${LIBFFI_DEFINITIONS}")
+
 add_executable(vanilla
     main.cpp
     src/scanner.cpp
@@ -28,6 +61,6 @@ add_executable(vanilla
     
     #src/gen/xml.cpp
 )
-target_link_libraries(vanilla ffi dl gmp)
+target_link_libraries(vanilla ${LIBS})
 
 install(TARGETS vanilla RUNTIME DESTINATION bin)
