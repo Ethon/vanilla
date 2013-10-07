@@ -496,7 +496,7 @@ void vanilla::int_object::eset(std::string const& name, ptr value)
 /////////// FREE FUNCTIONS
 ///////////////////////////////////////////////////////////////////////////
 
-#pragma clang diagnostic push
+#pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wtautological-compare"
 
 template<typename T, typename LongGetter>
@@ -515,7 +515,7 @@ T int_object_to_small(vanilla::object::ptr const& obj, char const* name, LongGet
     return static_cast<T>(temp);
 }
 
-#pragma clang diagnostic pop
+#pragma GCC diagnostic pop
 
 unsigned char vanilla::int_object_to_unsigned_char(object::ptr const& obj)
 {
