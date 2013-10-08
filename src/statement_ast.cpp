@@ -26,6 +26,7 @@
 #include <vanilla/statement_ast.hpp>
 #include <vanilla/object.hpp>
 #include <vanilla/bool_object.hpp>
+#include <vanilla/function_object.hpp>
 
 ///////////////////////////////////////////////////////////////////////////
 /////////// vanilla::statement_node
@@ -122,7 +123,7 @@ void vanilla::return_statement_node::accept(ast_visitor* v)
 }
 
 ///////////////////////////////////////////////////////////////////////////
-/////////// vanilla:if_statement_node
+/////////// vanilla::if_statement_node
 ///////////////////////////////////////////////////////////////////////////
 
 vanilla::if_statement_node::if_statement_node(
@@ -167,7 +168,7 @@ void vanilla::if_statement_node::accept(ast_visitor* v)
 }
 
 ///////////////////////////////////////////////////////////////////////////
-/////////// vanilla:while_statement_node
+/////////// vanilla::while_statement_node
 ///////////////////////////////////////////////////////////////////////////
 
 vanilla::while_statement_node::while_statement_node(
@@ -202,7 +203,72 @@ void vanilla::while_statement_node::accept(ast_visitor* v)
 }
 
 ///////////////////////////////////////////////////////////////////////////
-/////////// vanilla:assignment_statement_node
+/////////// vanilla::function_definition_statement_node
+///////////////////////////////////////////////////////////////////////////
+
+vanilla::function_definition_statement_node::function_definition_statement_node(
+            unsigned line,
+            unsigned pos,
+            std::string name,
+            std::vector<std::pair<std::string, expression_node::ptr>> arguments,
+            std::shared_ptr<statement_node> body )
+    :   statement_node(line, pos),
+        _name(std::move(name)),
+        _arguments(std::move(arguments)),
+        _body(std::move(body))
+{ }
+        
+std::string const& vanilla::function_definition_statement_node::get_name() const
+{
+    return _name;
+}
+
+std::vector<std::pair<std::string, vanilla::expression_node::ptr>> const&
+vanilla::function_definition_statement_node::get_arguments()
+{
+    return _arguments;
+}
+
+vanilla::statement_node* vanilla::function_definition_statement_node::get_body()
+{
+    return _body.get();
+}
+
+void vanilla::function_definition_statement_node::eval(context& c)
+{
+    auto callable = [=](context& c_, object::ptr*, unsigned) -> object::ptr
+    {
+        try
+        {
+            _body->eval(c_);
+            return allocate_object<none_object>();
+        }
+        catch(detail::function_returned& e)
+        {
+            return std::move(e.result);
+        }
+    };
+    
+    std::vector<function_argument> arguments;
+    arguments.reserve(_arguments.size());
+    for(auto& pair : _arguments)
+    {
+        if(pair.second)
+            arguments.push_back(function_argument(pair.first, pair.second->eval(c)));
+        else
+            arguments.push_back(function_argument(pair.first));
+    }
+    
+    c.set_value(_name, allocate_object<function_object>(_name, std::move(arguments), std::move(callable)));
+}
+
+void vanilla::function_definition_statement_node::accept(ast_visitor* v)
+{
+    //v->visit(this);
+}
+
+///////////////////////////////////////////////////////////////////////////
+/////////// vanilla::assignment_statement_node
 ///////////////////////////////////////////////////////////////////////////
 
 vanilla::assignment_statement_node::assignment_statement_node(

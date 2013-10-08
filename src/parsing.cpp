@@ -296,7 +296,8 @@ namespace
     {
         vanilla::token* t;
         if( (t = buffer.accept(vanilla::ttype::ident)) )
-            return make_unique<vanilla::variable_expression_node>(t->line, t->pos, std::string(t->lexeme.begin(), t->lexeme.end()));
+            return make_unique<vanilla::variable_expression_node>(
+                t->line, t->pos, std::string(t->lexeme.begin(), t->lexeme.end()));
         
         return vanilla::expression_node::ptr();
     }
@@ -698,6 +699,44 @@ namespace
             std::move(condition), std::move(code));
     }
     
+    vanilla::statement_node::ptr parse_function_definition_statement(token_buffer& buffer)
+    {
+        vanilla::token* t;
+        if( !(t = buffer.accept(vanilla::ttype::function)) )
+            return vanilla::statement_node::ptr();
+        
+        vanilla::token* name_token = buffer.expect(vanilla::ttype::ident);
+        std::string name(name_token->lexeme.begin(), name_token->lexeme.end());
+
+        // Parse argument list.
+        buffer.expect(vanilla::ttype::lparen);
+        std::vector<std::pair<std::string, vanilla::expression_node::ptr>> arguments;
+        while(!buffer.accept(vanilla::ttype::rparen))
+        {
+            vanilla::token* curname_token = buffer.expect(vanilla::ttype::ident);
+            std::string curname(curname_token->lexeme.begin(), curname_token->lexeme.end());
+            
+            vanilla::expression_node::ptr default_expression;
+            if(buffer.accept(vanilla::ttype::assign))
+                default_expression = parse_expression(buffer);
+            
+            arguments.push_back(std::make_pair(std::move(curname), std::move(default_expression)));
+            if(!buffer.accept(vanilla::ttype::comma))
+            {
+                buffer.expect(vanilla::ttype::rparen);
+                break;
+            }
+        }
+        
+        // Parse the function body.
+        vanilla::statement_node::ptr body_unique = parse_statement(buffer);
+        std::shared_ptr<vanilla::statement_node> body(body_unique.get());
+        body_unique.release();
+        
+        return make_unique<vanilla::function_definition_statement_node>(
+            t->line, t->pos, std::move(name), std::move(arguments), std::move(body));
+    }
+    
     vanilla::statement_node::ptr parse_statement(token_buffer& buffer);    
     vanilla::statement_node::ptr parse_code_block(token_buffer& buffer)
     {
@@ -725,6 +764,9 @@ namespace
             return std::move(n);
         
         if( (n = parse_while_statement(buffer)) )
+            return n;
+        
+        if( (n = parse_function_definition_statement(buffer)) )
             return n;
         
         return parse_assignment_statement(buffer);

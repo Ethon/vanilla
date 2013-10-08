@@ -134,6 +134,32 @@ namespace vanilla
         virtual void accept(ast_visitor* v) override;
     };
     
+    class function_definition_statement_node : public statement_node
+    {
+    private:
+        std::string _name;
+        std::vector<std::pair<std::string, expression_node::ptr>> _arguments;
+        std::shared_ptr<statement_node> _body;
+        
+    public:
+        function_definition_statement_node(
+            unsigned line,
+            unsigned pos,
+            std::string name,
+            std::vector<std::pair<std::string, expression_node::ptr>> arguments,
+            std::shared_ptr<statement_node> body );
+        
+        std::string const& get_name() const;
+        
+        std::vector<std::pair<std::string, expression_node::ptr>> const& get_arguments();
+        
+        statement_node* get_body();
+        
+        virtual void eval(context&) override;
+        
+        virtual void accept(ast_visitor* v) override;
+    };
+    
     class assignment_statement_node : public statement_node
     {
     private:
