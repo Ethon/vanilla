@@ -134,7 +134,7 @@ vanilla::int_expression_node::int_expression_node(
 
 void vanilla::int_expression_node::accept(ast_visitor* v)
 {
-    //v->visit(this);
+    v->visit(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -150,7 +150,7 @@ vanilla::float_expression_node::float_expression_node(
 
 void vanilla::float_expression_node::accept(ast_visitor* v)
 {
-    //v->visit(this);
+    v->visit(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -182,7 +182,7 @@ vanilla::bool_expression_node::bool_expression_node(
 
 void vanilla::bool_expression_node::accept(ast_visitor* v)
 {
-    //v->visit(this);
+    v->visit(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -208,7 +208,7 @@ vanilla::object::ptr vanilla::array_expression_node::eval(context& c)
 
 void vanilla::array_expression_node::accept(ast_visitor* v)
 {
-    //v->visit(this);
+    v->visit(this);
 }
 
 std::vector<vanilla::expression_node::ptr> const&
@@ -473,7 +473,7 @@ vanilla::object::ptr vanilla::greaterthan_expression_node::eval(context& c)
         
 void vanilla::greaterthan_expression_node::accept(ast_visitor* v)
 {
-    //v->visit(this);
+    v->visit(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -790,7 +790,7 @@ vanilla::native_function_definition_expression_node::get_argument_types() const
         
 void vanilla::native_function_definition_expression_node::accept(ast_visitor* v)
 {
-    //v->visit(this);
+    v->visit(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -873,7 +873,7 @@ vanilla::expression_node* vanilla::subscript_expression_node::get_subscript()
         
 void vanilla::subscript_expression_node::accept(ast_visitor* v)
 {
-    //v->visit(this);
+    v->visit(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////

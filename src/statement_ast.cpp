@@ -264,7 +264,7 @@ void vanilla::function_definition_statement_node::eval(context& c)
 
 void vanilla::function_definition_statement_node::accept(ast_visitor* v)
 {
-    //v->visit(this);
+    v->visit(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////

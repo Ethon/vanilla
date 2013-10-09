@@ -59,7 +59,7 @@ add_executable(vanilla
     src/function_object.cpp
     src/native_function_object.cpp
     
-    #src/gen/xml.cpp
+    src/gen/xml.cpp
 )
 target_link_libraries(vanilla ${LIBS})
 

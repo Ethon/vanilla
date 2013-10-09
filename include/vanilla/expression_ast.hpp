@@ -76,7 +76,7 @@ namespace vanilla
             return allocate_object<VanillaType>(_v);
         }
         
-        Type& get_value() const
+        Type& get_value()
         {
             return _v;
         }

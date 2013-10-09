@@ -57,167 +57,182 @@ vanilla::gen::xml_generator::xml_generator(std::ostream& o, unsigned indent_spac
 void vanilla::gen::xml_generator::visit(variable_expression_node* n)
 {
     indent();
-    _o << "<variable>" << n->get_name() << "</variable>\n";
+    _o << "<variable_expression_node>" << n->get_name() << "</variable_expression_node>\n";
 }
 
-void vanilla::gen::xml_generator::visit(integer_expression_node* n)
+void vanilla::gen::xml_generator::visit(int_expression_node* n)
 {
     indent();
-    _o << "<integer>" << n->get_value() << "</integer>\n";
+    _o << "<int_expression_node>";
+    context dummy;
+    _o << string_object_to_cpp_string(n->eval(dummy)->to_string());
+    _o << "</int_expression_node>\n";
 }
 
-void vanilla::gen::xml_generator::visit(real_expression_node* n)
+void vanilla::gen::xml_generator::visit(float_expression_node* n)
 {
     indent();
-    _o << "<real>" << n->get_value() << "</real>\n";
+    _o << "<float_expression_node>";
+    context dummy;
+    _o << string_object_to_cpp_string(n->eval(dummy)->to_string());
+    _o << "</float_expression_node>\n";
 }
 
 void vanilla::gen::xml_generator::visit(string_expression_node* n)
 {
     indent();
-    _o << "<string>" << *n->get_value() << "</string>\n";
+    _o << "<string_expression_node>" << n->get_value() << "</string_expression_node>\n";
 }
 
-void vanilla::gen::xml_generator::visit(boolean_expression_node* n)
+void vanilla::gen::xml_generator::visit(bool_expression_node* n)
 {
     indent();
-    _o << "<boolean>" << n->get_value() << "</boolean>\n";
+    _o << "<bool_expression_node>" << n->get_value() << "</bool_expression_node>\n";
+}
+
+void vanilla::gen::xml_generator::visit(array_expression_node* n)
+{
+    print_line("<array_expression_node>");
+    increase_indent();
+    for(auto& value : n->values())
+        value->accept(this);
+    decrease_indent();
+    print_line("</array_expression_node>");
 }
     
 // Unary expressions.
 void vanilla::gen::xml_generator::visit(negation_expression_node* n)
 {
-    print_line("<negation>");
+    print_line("<negation_expression_node>");
     increase_indent();
     n->get_child()->accept(this);
     decrease_indent();
-    print_line("</negation>");
+    print_line("</negation_expression_node>");
 }
 
 void vanilla::gen::xml_generator::visit(abs_expression_node* n)
 {
-    print_line("<abs>");
+    print_line("<abs_expression_node>");
     increase_indent();
     n->get_child()->accept(this);
     decrease_indent();
-    print_line("</abs>");
+    print_line("</abs_expression_node>");
 }
-    
     
 // Binary expressions.
 void vanilla::gen::xml_generator::visit(addition_expression_node* n)
 {
-    print_line("<addition>");
+    print_line("<addition_expression_node>");
     increase_indent();
     n->get_left()->accept(this);
     n->get_right()->accept(this);
     decrease_indent();
-    print_line("</addition>");
+    print_line("</addition_expression_node>");
 }
     
 void vanilla::gen::xml_generator::visit(subtraction_expression_node* n)
 {
-    print_line("<subtraction>");
+    print_line("<subtraction_expression_node>");
     increase_indent();
     n->get_left()->accept(this);
     n->get_right()->accept(this);
     decrease_indent();
-    print_line("</subtraction>");
+    print_line("</subtraction_expression_node>");
 }
 
 void vanilla::gen::xml_generator::visit(multiplication_expression_node* n)
 {
-    print_line("<multiplication>");
+    print_line("<multiplication_expression_node>");
     increase_indent();
     n->get_left()->accept(this);
     n->get_right()->accept(this);
     decrease_indent();
-    print_line("</multiplication>");
+    print_line("</multiplication_expression_node>");
 }
     
 void vanilla::gen::xml_generator::visit(division_expression_node* n)
 {
-    print_line("<division>");
+    print_line("<division_expression_node>");
     increase_indent();
     n->get_left()->accept(this);
     n->get_right()->accept(this);
     decrease_indent();
-    print_line("</division>");
+    print_line("</division_expression_node>");
 }
 
 void vanilla::gen::xml_generator::visit(concatenation_expression_node* n)
 {
-    print_line("<concatenation>");
+    print_line("<concatenation_expression_node>");
     increase_indent();
     n->get_left()->accept(this);
     n->get_right()->accept(this);
     decrease_indent();
-    print_line("</concatenation>");
+    print_line("</concatenation_expression_node>");
 }
 
 void vanilla::gen::xml_generator::visit(lessthan_expression_node* n)
 {
-    print_line("<less>");
+    print_line("<lessthan_expression_node>");
     increase_indent();
     n->get_left()->accept(this);
     n->get_right()->accept(this);
     decrease_indent();
-    print_line("</less>");
+    print_line("</lessthan_expression_node>");
 }
 
 void vanilla::gen::xml_generator::visit(lessequal_expression_node* n)
 {
-    print_line("<lessequal>");
+    print_line("<lessequal_expression_node>");
     increase_indent();
     n->get_left()->accept(this);
     n->get_right()->accept(this);
     decrease_indent();
-    print_line("</lessequal>");
+    print_line("</lessequal_expression_node>");
 }
 
-void vanilla::gen::xml_generator::visit(greater_expression_node* n)
+void vanilla::gen::xml_generator::visit(greaterthan_expression_node* n)
 {
-    print_line("<greater>");
+    print_line("<greaterthan_expression_node>");
     increase_indent();
     n->get_left()->accept(this);
     n->get_right()->accept(this);
     decrease_indent();
-    print_line("</greater>");
+    print_line("</greaterthan_expression_node>");
 }
     
 void vanilla::gen::xml_generator::visit(greaterequal_expression_node* n)
 {
-    print_line("<greaterequal>");
+    print_line("<greaterequal_expression_node>");
     increase_indent();
     n->get_left()->accept(this);
     n->get_right()->accept(this);
     decrease_indent();
-    print_line("</greaterequal>");
+    print_line("</greaterequal_expression_node>");
 }
 
 void vanilla::gen::xml_generator::visit(equality_expression_node* n)
 {
-    print_line("<equality>");
+    print_line("<equality_expression_node>");
     increase_indent();
     n->get_left()->accept(this);
     n->get_right()->accept(this);
     decrease_indent();
-    print_line("</equality>");
+    print_line("</equality_expression_node>");
 }
 
 void vanilla::gen::xml_generator::visit(inequality_expression_node* n)
 {
-    print_line("<inequality>");
+    print_line("<inequality_expression_node>");
     increase_indent();
     n->get_left()->accept(this);
     n->get_right()->accept(this);
     decrease_indent();
-    print_line("</inequality>");
+    print_line("</inequality_expression_node>");
 }
 
 void vanilla::gen::xml_generator::visit(function_call_expression_node* n)
 {
-    print_line("<call>");
+    print_line("<function_call_expression_node>");
     increase_indent();
     
     print_line("<target>");
@@ -234,19 +249,35 @@ void vanilla::gen::xml_generator::visit(function_call_expression_node* n)
     print_line("</arguments>");
     
     decrease_indent();
-    print_line("</call>");
+    print_line("</function_call_expression_node>");
 }
 
 void vanilla::gen::xml_generator::visit(function_definition_expression_node* n)
 {
-    print_line("<function>");
+    print_line("<function_definition_expression_node>");
     increase_indent();
     
-    for(auto const& cur : n->get_argnames())
+    indent();
+    _o << "<name>" << n->get_name() << "</name>\n";
+    
+    print_line("<arguments>");
+    increase_indent();
+    for(auto const& cur : n->get_arguments())
     {
         indent();
-        _o << "<argname>" << cur << "</argname>\n";
+        _o << "<name>" << n->get_name() << "</name>\n";
+        
+        if(cur.second)
+        {
+            print_line("<default>");
+            increase_indent();
+            cur.second->accept(this);
+            decrease_indent();
+            print_line("</default>");
+        }
     }
+    decrease_indent();
+    print_line("</arguments>");
     
     print_line("<body>");
     increase_indent();
@@ -255,12 +286,40 @@ void vanilla::gen::xml_generator::visit(function_definition_expression_node* n)
     print_line("</body>");
     
     decrease_indent();
-    print_line("</function>");
+    print_line("</function_definition_expression_node>");
+}
+
+void vanilla::gen::xml_generator::visit(native_function_definition_expression_node* n)
+{
+    print_line("<native_function_definition_expression_node>");
+    increase_indent();
+    
+    indent();
+    _o << "<name>" << n->get_name() << "</name>\n";
+    
+    indent();
+    _o << "<library>" << n->get_library() << "</library>\n";
+    
+    indent();
+    _o << "<returns>" << n->get_return_type() << "</returns>\n";
+    
+    print_line("<arguments>");
+    increase_indent();
+    for(std::string const& cur : n->get_argument_types())
+    {
+        indent();
+        _o << "<type>" << cur << "</type>\n";
+    }
+    decrease_indent();
+    print_line("</arguments>");
+    
+    decrease_indent();
+    print_line("</native_function_definition_expression_node>");
 }
 
 void vanilla::gen::xml_generator::visit(conditional_expression_node* n)
 {
-    print_line("<conditional>");
+    print_line("<conditional_expression_node>");
     increase_indent();
     
     n->get_condition()->accept(this);
@@ -268,16 +327,37 @@ void vanilla::gen::xml_generator::visit(conditional_expression_node* n)
     n->get_else()->accept(this);
     
     decrease_indent();
-    print_line("</conditional>");
+    print_line("</conditional_expression_node>");
+}
+
+void vanilla::gen::xml_generator::visit(subscript_expression_node* n)
+{
+    print_line("<subscript_expression_node>");
+    increase_indent();
+    n->get_expression()->accept(this);
+    n->get_subscript()->accept(this);
+    decrease_indent();
+    print_line("</subscript_expression_node>");
+}
+
+void vanilla::gen::xml_generator::visit(element_selection_expression_node* n)
+{
+    print_line("<equality_expression_node>");
+    increase_indent();
+    n->get_left()->accept(this);
+    indent();
+    _o << n->get_element_name() << '\n';
+    decrease_indent();
+    print_line("</equality_expression_node>");
 }
 
 void vanilla::gen::xml_generator::visit(return_statement_node* n)
 {
-    print_line("<return>");
+    print_line("<return_statement_node>");
     increase_indent();
     n->get_expression()->accept(this);
     decrease_indent();
-    print_line("</return>");
+    print_line("</return_statement_node>");
 }
 
 void vanilla::gen::xml_generator::visit(statement_sequence_node* n)
@@ -288,17 +368,17 @@ void vanilla::gen::xml_generator::visit(statement_sequence_node* n)
 
 void vanilla::gen::xml_generator::visit(assignment_statement_node* n)
 {
-    print_line("<assignment>");
+    print_line("<assignment_statement_node>");
     increase_indent();
     n->get_left()->accept(this);
     n->get_right()->accept(this);
     decrease_indent();
-    print_line("</assignment>");
+    print_line("</assignment_statement_node>");
 }
 
 void vanilla::gen::xml_generator::visit(if_statement_node* n)
 {
-    print_line("<if>");
+    print_line("<if_statement_node>");
     increase_indent();
 
     auto const& ifs = n->get_ifs();
@@ -344,12 +424,12 @@ void vanilla::gen::xml_generator::visit(if_statement_node* n)
     }
     
     decrease_indent();
-    print_line("</if>");
+    print_line("</if_statement_node>");
 }
 
 void vanilla::gen::xml_generator::visit(while_statement_node* n)
 {
-    print_line("<while>");
+    print_line("<while_statement_node>");
     increase_indent();
     
     print_line("<condition>");
@@ -365,7 +445,44 @@ void vanilla::gen::xml_generator::visit(while_statement_node* n)
     print_line("</code>");
     
     decrease_indent();
-    print_line("</while>");
+    print_line("</while_statement_node>");
+}
+
+void vanilla::gen::xml_generator::visit(function_definition_statement_node* n)
+{
+    print_line("<function_definition_statement_node>");
+    increase_indent();
+    
+    indent();
+    _o << "<name>" << n->get_name() << "</name>\n";
+    
+    print_line("<arguments>");
+    increase_indent();
+    for(auto const& cur : n->get_arguments())
+    {
+        indent();
+        _o << "<name>" << n->get_name() << "</name>\n";
+        
+        if(cur.second)
+        {
+            print_line("<default>");
+            increase_indent();
+            cur.second->accept(this);
+            decrease_indent();
+            print_line("</default>");
+        }
+    }
+    decrease_indent();
+    print_line("</arguments>");
+    
+    print_line("<body>");
+    increase_indent();
+    n->get_body()->accept(this);
+    decrease_indent();
+    print_line("</body>");
+    
+    decrease_indent();
+    print_line("</function_definition_statement_node>");
 }
 
 void vanilla::gen::emit_xml(ast_node* ast, std::ostream& o, unsigned indent_spaces)

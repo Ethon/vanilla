@@ -50,10 +50,11 @@ namespace vanilla
             
             // Nullary expressions.
             virtual void visit(variable_expression_node* n) override;
-            virtual void visit(integer_expression_node* n) override;
-            virtual void visit(real_expression_node* n) override;
+            virtual void visit(int_expression_node* n) override;
+            virtual void visit(float_expression_node* n) override;
             virtual void visit(string_expression_node* n) override;
-            virtual void visit(boolean_expression_node* n) override;
+            virtual void visit(bool_expression_node* n) override;
+            virtual void visit(array_expression_node* n) override;
             
             // Unary expressions.
             virtual void visit(negation_expression_node* n) override;
@@ -67,7 +68,7 @@ namespace vanilla
             virtual void visit(concatenation_expression_node* n) override;
             virtual void visit(lessthan_expression_node* n) override;
             virtual void visit(lessequal_expression_node* n) override;
-            virtual void visit(greater_expression_node* n) override;
+            virtual void visit(greaterthan_expression_node* n) override;
             virtual void visit(greaterequal_expression_node* n) override;
             virtual void visit(equality_expression_node* n) override;
             virtual void visit(inequality_expression_node* n) override;
@@ -75,15 +76,19 @@ namespace vanilla
             // Function expressions.
             virtual void visit(function_call_expression_node* n) override;
             virtual void visit(function_definition_expression_node* n) override;
+            virtual void visit(native_function_definition_expression_node* n) override;
             
             // Other expressions.
             virtual void visit(conditional_expression_node* n) override;
-            
+            virtual void visit(subscript_expression_node* n) override;
+            virtual void visit(element_selection_expression_node* n) override;
+        
             // Statements.
             virtual void visit(return_statement_node* n) override;
             virtual void visit(statement_sequence_node* n) override;
             virtual void visit(if_statement_node* n) override;
             virtual void visit(while_statement_node* n) override;
+            virtual void visit(function_definition_statement_node* n) override;
             virtual void visit(assignment_statement_node* n) override;
         };
         

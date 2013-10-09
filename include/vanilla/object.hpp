@@ -48,7 +48,6 @@ namespace vanilla
     object_type_id const OBJECT_ID_NATIVE_FUNCTION = 0xA;
     object_type_id const OBJECT_ID_MEMBER_FUNCTION = 0xB;
     object_type_id const OBJECT_ID_CLASS = 0xC;
-    
     object_type_id const OBJECT_ID_CLASSFLAG = 1 << 31;
     
  

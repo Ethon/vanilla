@@ -46,9 +46,9 @@ int main(int argc, char **argv)
         auto ast = vanilla::parse_file(argv[1]);
         ast->eval(c);
         
-        //std::string filename(argv[1]);
-        //std::ofstream out(filename + ".xml");
-        //gen::emit_xml(ast.get(), out);
+        std::string filename(argv[1]);
+        std::ofstream out(filename + ".xml");
+        gen::emit_xml(ast.get(), out);
     }
     catch(error::invalid_token_error const& e)
     {

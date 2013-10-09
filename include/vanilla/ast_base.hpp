@@ -26,10 +26,11 @@ namespace vanilla
 {
     // Nullary expression forwarding.
     class variable_expression_node;
-    class integer_expression_node;
-    class real_expression_node;
+    class int_expression_node;
+    class float_expression_node;
     class string_expression_node;
-    class boolean_expression_node;
+    class bool_expression_node;
+    class array_expression_node;
     
     // Unary expression forwarding.
     class negation_expression_node;
@@ -43,7 +44,7 @@ namespace vanilla
     class concatenation_expression_node;
     class lessthan_expression_node;
     class lessequal_expression_node;
-    class greater_expression_node;
+    class greaterthan_expression_node;
     class greaterequal_expression_node;
     class equality_expression_node;
     class inequality_expression_node;
@@ -51,15 +52,19 @@ namespace vanilla
     // Function expressions.
     class function_call_expression_node;
     class function_definition_expression_node;
+    class native_function_definition_expression_node;
     
     // Other expressions.
     class conditional_expression_node;
+    class subscript_expression_node;
+    class element_selection_expression_node;
     
     // Statements.
     class return_statement_node;
     class statement_sequence_node;
     class if_statement_node;
     class while_statement_node;
+    class function_definition_statement_node;
     class assignment_statement_node;
     
     class ast_visitor
@@ -69,10 +74,11 @@ namespace vanilla
         
         // Nullary expressions.
         virtual void visit(variable_expression_node*) = 0;
-        virtual void visit(integer_expression_node*) = 0;
-        virtual void visit(real_expression_node*) = 0;
+        virtual void visit(int_expression_node*) = 0;
+        virtual void visit(float_expression_node*) = 0;
         virtual void visit(string_expression_node*) = 0;
-        virtual void visit(boolean_expression_node*) = 0;
+        virtual void visit(bool_expression_node*) = 0;
+        virtual void visit(array_expression_node*) = 0;
         
         // Unary expressions.
         virtual void visit(negation_expression_node*) = 0;
@@ -86,7 +92,7 @@ namespace vanilla
         virtual void visit(concatenation_expression_node*) = 0;
         virtual void visit(lessthan_expression_node*) = 0;
         virtual void visit(lessequal_expression_node*) = 0;
-        virtual void visit(greater_expression_node*) = 0;
+        virtual void visit(greaterthan_expression_node*) = 0;
         virtual void visit(greaterequal_expression_node*) = 0;
         virtual void visit(equality_expression_node*) = 0;
         virtual void visit(inequality_expression_node*) = 0;
@@ -94,15 +100,19 @@ namespace vanilla
         // Function expressions.
         virtual void visit(function_call_expression_node*) = 0;
         virtual void visit(function_definition_expression_node*) = 0;
+        virtual void visit(native_function_definition_expression_node*) = 0;
         
         // Other expressions.
         virtual void visit(conditional_expression_node*) = 0;
-        
+        virtual void visit(subscript_expression_node*) = 0;
+        virtual void visit(element_selection_expression_node*) = 0;
+    
         // Statements.
         virtual void visit(return_statement_node*) = 0;
         virtual void visit(statement_sequence_node*) = 0;
         virtual void visit(if_statement_node*) = 0;
         virtual void visit(while_statement_node*) = 0;
+        virtual void visit(function_definition_statement_node*) = 0;
         virtual void visit(assignment_statement_node*) = 0;
     };
     
